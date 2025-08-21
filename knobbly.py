@@ -1,10 +1,10 @@
-from flask import Flask
+from flask import Flask, render_template
 
 knobblyApp = Flask(__name__)
 
 @knobblyApp.route('/')
 def home():
-    return '<h1> Hola mundo!</h1>'
+    return render_template('home.hmtl')
 
 if __name__ == '__main__':
     knobblyApp.run(debug=True,port=7007)
