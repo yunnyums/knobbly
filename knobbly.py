@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from config import config
 from werkzeug.security import generate_password_hash
 from flask_mysqldb import MySQL
-from models.entities.User import user
+from models.entities.User import User
 from models.ModelUser import ModelUser
 from flask_login import LoginManager, login_user, login_user
 
@@ -22,8 +22,9 @@ def home():
     return render_template('home.html')
 
 # Iniciar sesión
-@knobblyApp.route('/signin', methods=["GET", "POST"])
+@knobblyApp.route('/signin', methods=['GET', 'POST'])
 def signin():
+
     if request.method == "POST":
         correo = request.form.get("correo")
         clave = request.form.get("clave")
@@ -33,7 +34,7 @@ def signin():
     return render_template('signin.html')
 
 # Registrarse
-@knobblyApp.route('/signup', methods=["GET", "POST"])
+@knobblyApp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == "POST":
         nombre = request.form.get("nombre")
@@ -62,13 +63,28 @@ def signup():
         db.connection.commit()
         cursor.close()
 
-        return redirect(url_for("signin"))
-
-    return render_template('signup.html')
+        return redirect(url_for("home"))
+    if request.method == "POST":
+        usuario= User(0,None, request.form['correo'], request.form['clave'], None)
+        usuarioAutenticado = ModelUser.signin(db, usuario)
+        if usuarioAutenticado is not None:
+            if usuarioAutenticado.clave:
+                login_user(usuarioAutenticado)
+                if usuarioAutenticado.perfil == 'A':
+                    return render_template('admin.html')
+                else:
+                    return render_template('user.html')
+            else:
+                return 'clave incorrecta'
+        else:
+            return 'usuario inexistente'
+    else:
+        return render_template('signup.html')
 
 # Ejecutar la app
 if __name__ == '__main__':
-    knobblyApp.run(debug=True,port=7007)
+    knobblyApp.config.from_object(config['development'])
+    knobblyApp.run(port=7007)
 
 
 @knobblyApp.route('/')
