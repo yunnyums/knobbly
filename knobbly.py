@@ -4,7 +4,8 @@ from werkzeug.security import generate_password_hash
 from flask_mysqldb import MySQL
 from models.entities.User import User
 from models.ModelUser import ModelUser
-from flask_login import LoginManager, login_user, login_user
+from flask_login import LoginManager, login_user, login_user, logout_user
+
 
 # Configuración de Flask y MySQL
 knobblyApp = Flask(__name__)
@@ -21,49 +22,21 @@ def loader_user(id):
 def home():
     return render_template('home.html')
 
-# Iniciar sesión
-@knobblyApp.route('/signin', methods=['GET', 'POST'])
-def signin():
-
-    if request.method == "POST":
-        correo = request.form.get("correo")
-        clave = request.form.get("clave")
-        # Aquí iría la lógica para verificar usuario y contraseña
-        print(f"Iniciar sesión con: {correo}, {clave}")
-        return redirect(url_for("home"))
-    return render_template('signin.html')
-
-# Registrarse
-@knobblyApp.route('/signup', methods=['GET', 'POST'])
+knobblyApp.route('/signup', methods=['GET', 'POST'])
 def signup():
-    if request.method == "POST":
-        nombre = request.form.get("nombre")
-        correo = request.form.get("correo")
-        clave = request.form.get("clave")
-        telefono = request.form.get("telefono")
-        direccion = request.form.get("direccion")
+        if request.method == 'POST':
+            nombre = request.form['nombre']
+            correo = request.form['correo']
+            clave = request.form['clave']
+            claveCifrada = generate_password_hash(clave)
+            regUsuario = db.connection.cursor()
+            regUsuario.execue("INSERT INTO usuario(nombre,correo,clave) VALUES (%s, %s, %s)", (nombre, correo, clave))
+            db.connection.commit()
+            return redirect(url_for('home'))
 
-        # Validación básica
-        if not nombre or not correo or not clave or not telefono or not direccion:
-            return "Faltan datos en el formulario", 400
-        
-        # Cifrar contraseña
-        claveCifrada = generate_password_hash(clave)
-        perfil = 'U'  # Valor por defecto
-
-        # Depuración
-        print("Datos a insertar:", nombre.upper(), correo, claveCifrada, telefono, direccion, perfil)
-
-        # Guardar usuario en la base de datos
-        cursor = db.connection.cursor()
-        cursor.execute(
-            "INSERT INTO usuario (nombre, correo, clave, telefono, direccion, perfil) VALUES (%s, %s, %s, %s, %s, %s)",
-            (nombre.upper(), correo, claveCifrada, telefono, direccion, perfil)
-        )
-        db.connection.commit()
-        cursor.close()
-
-        return redirect(url_for("home"))
+# Iniciar sesion
+@knobblyApp.route('/signin',ethods=['GET', 'POST'])
+def signin():
     if request.method == "POST":
         usuario= User(0,None, request.form['correo'], request.form['clave'], None)
         usuarioAutenticado = ModelUser.signin(db, usuario)
@@ -75,19 +48,22 @@ def signup():
                 else:
                     return render_template('user.html')
             else:
-                return 'clave incorrecta'
+                flash('clave incorrecta')
+                return redirect(request.url)
         else:
-            return 'usuario inexistente'
+            flash('usuario inexistente')
+            return redirect(request.url)
     else:
-        return render_template('signup.html')
+        return render_template('signin.html')
 
+@knobblyApp.route('/signout', methods=['GET','POST'])
+def signout():
+    logout_user()
+    return redirect(url_for('home'))
 # Ejecutar la app
 if __name__ == '__main__':
     knobblyApp.config.from_object(config['development'])
     knobblyApp.run(port=7007)
 
 
-@knobblyApp.route('/')
-def home():
-    return render_template('home.hmtl')
 
