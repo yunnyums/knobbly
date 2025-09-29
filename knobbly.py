@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from config import config
 from werkzeug.security import generate_password_hash
 from flask_mysqldb import MySQL
 from models.entities.User import User
 from models.ModelUser import ModelUser
-from flask_login import LoginManager, login_user, login_user, logout_user
+from flask_login import LoginManager, login_user, login_user, logout_user, login_required
 
 
 # Configuración de Flask y MySQL
@@ -60,7 +60,14 @@ def signin():
 def signout():
     logout_user()
     return redirect(url_for('home'))
-# Ejecutar la app
+
+@knobblyApp.route('/sUsuario', methods=['GET','POST'])
+def sUsuario():
+    SelUsuario = db.connection.cursor()
+    SelUsuario.execute("SELECT * FROM usuario")
+    u = SelUsuario.fetchall()
+    return render_template('users.html', usuarios = u)
+
 if __name__ == '__main__':
     knobblyApp.config.from_object(config['development'])
     knobblyApp.run(port=7007)
