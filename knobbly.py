@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, redirect, url_for, flash
 from config import config
 from werkzeug.security import generate_password_hash
@@ -35,7 +36,7 @@ def signup():
             return redirect(url_for('home'))
 
 # Iniciar sesion
-@knobblyApp.route('/signin',ethods=['GET', 'POST'])
+@knobblyApp.route('/signin',methods=['GET', 'POST'])
 def signin():
     if request.method == "POST":
         usuario= User(0,None, request.form['correo'], request.form['clave'], None)
