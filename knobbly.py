@@ -23,39 +23,42 @@ def loader_user(id):
 def home():
     return render_template('home.html')
 
-knobblyApp.route('/signup', methods=['GET', 'POST'])
+# registrarse
+@knobblyApp.route('/signup', methods=['GET', 'POST'])
 def signup():
-        if request.method == 'POST':
-            nombre = request.form['nombre']
-            correo = request.form['correo']
-            clave = request.form['clave']
-            claveCifrada = generate_password_hash(clave)
-            regUsuario = db.connection.cursor()
-            regUsuario.execue("INSERT INTO usuario(nombre,correo,clave) VALUES (%s, %s, %s)", (nombre, correo, clave))
-            db.connection.commit()
-            return redirect(url_for('home'))
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        clave = request.form['clave']
+        claveCifrada = generate_password_hash(clave)
+        regUsuario = db.connection.cursor()
+        regUsuario.execute("INSERT INTO usuario(nombre,correo,clave) VALUES (%s, %s, %s)", (nombre, correo, claveCifrada))
+        db.connection.commit()
+        return redirect(url_for('home'))
+    else:
+        return render_template('signup.html')
 
 # Iniciar sesion
 @knobblyApp.route('/signin',methods=['GET', 'POST'])
 def signin():
-    if request.method == "POST":
-        usuario= User(0,None, request.form['correo'], request.form['clave'], None)
-        usuarioAutenticado = ModelUser.signin(db, usuario)
-        if usuarioAutenticado is not None:
-            if usuarioAutenticado.clave:
-                login_user(usuarioAutenticado)
-                if usuarioAutenticado.perfil == 'A':
-                    return render_template('admin.html')
-                else:
-                    return render_template('user.html')
+if request.method == "POST":
+    usuario= User(0,None, request.form['correo'], request.form['clave'], None)
+    usuarioAutenticado = ModelUser.signin(db, usuario)
+    if usuarioAutenticado is not None:
+        if usuarioAutenticado.clave:
+            login_user(usuarioAutenticado)
+            if usuarioAutenticado.perfil == 'A':
+                return render_template('admin.html')
             else:
-                flash('clave incorrecta')
-                return redirect(request.url)
+                return render_template('user.html')
         else:
-            flash('usuario inexistente')
+            flash('clave incorrecta')
             return redirect(request.url)
     else:
-        return render_template('signin.html')
+        flash('usuario inexistente')
+        return redirect(request.url)
+else:
+    return render_template('signin.html')
 
 @knobblyApp.route('/signout', methods=['GET','POST'])
 def signout():
@@ -72,6 +75,3 @@ def sUsuario():
 if __name__ == '__main__':
     knobblyApp.config.from_object(config['development'])
     knobblyApp.run(port=7007)
-
-
-

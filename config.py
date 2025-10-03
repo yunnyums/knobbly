@@ -1,13 +1,14 @@
 class Config:
-    SECRET_KEY  = 'JKJOWEOAd<tbh+d.nOiUHBigIhi¿GHigIOjHouPOi--mvckdbanoucbYVTv8yb9ygIYg7t7302fHF82¿'
-    GEBUG   = True
+    SECRET_KEY  = 'hfirdnlfdnesljfnslhdu45hhgtguk38w4847664773irsh7673mjf'
+    DEBUG       = True
     
 class DevelopmentConfig(Config):
-    MYSQL_HOST      = 'localhost'
-    MYSQL_USER      = 'root'
+    MYSQL_HOST  = 'localhost'
+    MYSQL_USER  = 'root'
     MYSQL_PASSWORD  = 'mysql'
-    MYSQL_DB        = 'knobbly'
+    MYSQL_DB    = 'errores'
 
-config = {
-    'development': DevelopmentConfig
-}
+config ={
+        'development': DevelopmentConfig
+        
+    }
