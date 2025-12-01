@@ -25,7 +25,7 @@
             Dropdown
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/sUsuario">Usuarios</a></li>
+            <li><a class="dropdown-item" href="/susuario">Usuarios</a></li>
             <li><a class="dropdown-item" href="/sProductos">Productos</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -48,22 +48,26 @@
     <thead>
       <th>ID</th>
       <th>NOMBRE</th>
-      <th>CORREO</th>
-      <th>CLAVE</th>
-      <th>PERFIL</th>
+      <th>CARRITO DE COMPRAS</th>
+      <th>CHAT</th>
+      <th>PERFILES</th>
+      <th>PRODUCTOS</th>
+      <th>USUARIOS</th>
       <th colpan="2">&nbsp;</th>
     </thead>
     <tbody>
-      {% for u in usuarios %}
+      {% for p in productos %}
       <tr>
-        <td>{{u[0]}}</td>
-        <td>{{u[1]}}</td>
-        <td>{{u[2]}}</td>
-        <td>{{u[3]|truncate(25)}}</td>
-        <td>{{u[4]}}</td>
+        <td>{{p[0]}}</td>
+        <td>{{p[1]}}</td>
+        <td>{{p[2]}}</td>
+        <td>{{p[3]}}</td>
+        <td>{{p[4]}}</td>
+        <td>{{p[5]}}</td>
+        <td><img src="/static/img/{{p[6]}}" height="80" alt=""></td>
         <td>
           <!-- Button Editar -->
-          button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editar{{u[0]}}">
+          button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editar{{p[0]}}">
           <i class="fa-solid fa-user-pen"></i>
           Editar
           </button>
@@ -73,7 +77,7 @@
       
 
       <!-- Modal Editar -->
-      <div class="modal fade" id="editar{{u[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="editar{{p[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -84,19 +88,19 @@
             <div class="modal-body">
               <!-- Nombre -->
               <label for="inputPassword5" class="form-label">Nombre</label>
-              <input type="nombre" name="nombre" value="{{u[1]}}" id="inputPassword5" class="form-control" aria-describedby="nombrecompleto">
+              <input type="nombre" name="nombre" value="{{p[1]}}" id="inputPassword5" class="form-control" aria-describedby="nombrecompleto">
               <div id="nombrecompleto" class="form-text">
                 Introduce un nombre completo
               </div>
               <!-- Correo -->
               <label for="correo" class="form-label">Correo</label>
-              <input type="email" name="correo" value="{{u[2]}}" id="correo" class="form-control" aria-describedby="ayudacorreo">
+              <input type="email" name="correo" value="{{p[2]}}" id="correo" class="form-control" aria-describedby="ayudacorreo">
               <div id="ayudacorreo" class="form-text">
                 Introduce un correo
               </div>
               <!-- Clave -->
             <label for="clave" class="form-label">Clave</label>
-            <input type="password" name="clave" value="{{u[3]}}" id="clave" class="form-control" aria-describedby="ayudaclave">
+            <input type="password" name="clave" value="{{p[3]}}" id="clave" class="form-control" aria-describedby="ayudaclave">
             <div id="ayudaclave" class="form-text">
               Introduce una clave
             </div>
@@ -105,7 +109,7 @@
               <label for="perfil" class="form-label">Perfil</label>
               <select class="form-select" aria-label="Default select example">
               <option>Selecciona un perfil</option>
-              {% if u[4] == "A" %}
+              {% if p[4] == "A" %}
               <option value="A">Administrador</option>
               <option selected ="U">Usuario</option>
               {% else %}

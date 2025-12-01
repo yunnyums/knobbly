@@ -61,7 +61,10 @@ def signin():
                 if usuarioAutenticado.perfil == 'A':
                     return render_template('admin.html')
                 else:
-                    return render_template('user.html')
+                    SelProductos = db.connection.cursor()
+                    SelProductos.execute("SELECT * FROM productos")
+                    p = SelProductos.fetchall()
+                    return render_template('productos.html', productos = p)
             else:
                 flash('Clave incorrecta')
                 return redirect(request.url)
@@ -87,6 +90,14 @@ def sUsuario():
     cursor.execute("SELECT * FROM usuario")
     usuarios = cursor.fetchall()
     return render_template('users.html', usuarios=usuarios)
+
+@knobblyApp.route('/sProductos')
+@login_required
+def sProductos():
+    SelProductos = db.connection.cursor()
+    SelProductos.execute("SELECT * FROM productos")
+    p = SelProductos.fetchall()
+    return render_template('productos.html', productos = p)
 
 @knobblyApp.route('/iUsuario', methods=['POST', 'GET'])
 def iUsuario():

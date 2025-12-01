@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 20-11-2025 a las 00:34:28
+-- Tiempo de generación: 01-12-2025 a las 21:01:35
 -- Versión del servidor: 8.0.43
 -- Versión de PHP: 7.4.9
 
@@ -86,7 +86,48 @@ CREATE TABLE `productos` (
   `id` int NOT NULL,
   `nombre_producto` text NOT NULL,
   `descripcion` text NOT NULL,
-  `precio` float NOT NULL
+  `precio` float NOT NULL,
+  `Imagen` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id`, `nombre_producto`, `descripcion`, `precio`, `Imagen`) VALUES
+(1, 'RoyalCanin IndoorAdult', 'Croquetas para gato adulto control de bolas de pelo RoyalCanin', 18.5, 'royalcanin_indooradult.jpg'),
+(2, 'RoyalCanin KittenDry', 'Alimento seco nutricion balanceada para gatitos RoyalCanin', 16.9, 'royalcanin_kittendry.jpg'),
+(3, 'Whiskas TunaBites', 'Snacks sabor atun para gato Whiskas', 4.2, 'whiskas_tunabites.jpg'),
+(4, 'Whiskas ChickenCrunch', 'Premio crujiente sabor pollo Whiskas', 3.9, 'whiskas_chickencrunch.jpg'),
+(5, 'Friskies OceanMix', 'Alimento seco mezcla pescado para gatos Friskies', 12.8, 'friskies_oceanmix.jpg'),
+(6, 'Friskies CatParty', 'Snacks variados para gatos Friskies', 5.1, 'friskies_catparty.jpg'),
+(7, 'Catit SensesBall', 'Juguete pelota interactiva para gato Catit', 8.7, 'catit_sensesball.jpg'),
+(8, 'Catit TunnelPlay', 'Tunel de juego flexible para gato Catit', 14.6, 'catit_tunnelplay.jpg'),
+(9, 'Kong FeatherTeaser', 'Juguete teaser con pluma para gato Kong', 9.4, 'kong_featherteaser.jpg'),
+(10, 'Kong SoftMouse', 'Juguete raton suave para gatos Kong', 7.1, 'kong_softmouse.jpg'),
+(11, 'Petstages TowerTracks', 'Torre de pistas para gatos Petstages', 22.9, 'petstages_towertracks.jpg'),
+(12, 'Petstages ChaseBall', 'Bola ligera para juego activo Petstages', 6.5, 'petstages_chaseball.jpg'),
+(13, 'Trixie PlushMouse', 'Raton de peluche para gato Trixie', 4.8, 'trixie_plushmouse.jpg'),
+(14, 'Trixie CatTunnel', 'Tunel plegable para gato Trixie', 13.4, 'trixie_cattunnel.jpg'),
+(15, 'Hartz CatnipToy', 'Juguete con catnip integrado Hartz', 5.6, 'hartz_catniptoy.jpg'),
+(16, 'Hartz ChewMouse', 'Raton resistente con aroma a catnip Hartz', 6.2, 'hartz_chewmouse.jpg'),
+(17, 'Orijen CatTreats', 'Premios naturales para gato Orijen', 9.9, 'orijen_cattreats.jpg'),
+(18, 'Orijen SixFishDry', 'Alimento premium de seis pescados para gato Orijen', 24.7, 'orijen_sixfishdry.jpg'),
+(19, 'BlueBuffalo CatTurkey', 'Alimento de pavo para gato BlueBuffalo', 19.3, 'bluebuffalo_catturkey.jpg'),
+(20, 'BlueBuffalo IndoorMix', 'Formula interior para gato adulto BlueBuffalo', 21.1, 'bluebuffalo_indoormix.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `id` int NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `correo` varchar(150) NOT NULL,
+  `clave` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `direccion` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -144,6 +185,12 @@ ALTER TABLE `productos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -181,7 +228,7 @@ ALTER TABLE `perfiles_gatos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
