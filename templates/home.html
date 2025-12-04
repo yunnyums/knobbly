@@ -1,84 +1,130 @@
 {% extends "layout.html" %}
 
-{% block titulo %}Bienvenidiiiiiooouuusssssssss{% endblock %}
+{% block titulo %}Bienvenido{% endblock %}
 
 {% block contenido %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="/">
+      <i class="fa-solid fa-shop fa-bounce text-primary"></i> Knobbly Store
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">
-            <i class="fa-solid fa-house fa-bounce"></i>
-            Home
+          <a class="nav-link active" href="/">
+            <i class="fa-solid fa-house"></i> Inicio
           </a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="/productos">
+            <i class="fa-solid fa-store"></i> Productos
+          </a>
         </li>
+
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            Cuenta
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="/signup">Registro</a></li>
+            <li><a class="dropdown-item" href="/signin">Iniciar sesión</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-
-        <li class="nav-item">
-        <a class="nav-link" href="/signup">Registro</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="/signin">Iniciar sesion</a>
-      </li>
 
       </ul>
-
-      
-
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>
 
-<!-- Carrusel -->
-<div id="carouselExample" class="carousel slide">
+
+<!-- CAROUSEL -->
+<div id="carouselHome" class="carousel slide">
   <div class="carousel-inner">
+
+    <!-- 1 -->
     <div class="carousel-item active">
-      <img src="{{ url_for('static', filename='img/charlie-deets-TKgOIwPVmkg-unsplash (1).jpg') }}" class="d-block w-100" alt="...">
+      <div class="overlay-dark">
+        <img src="{{ url_for('static', filename='img/charlie-deets-TKgOIwPVmkg-unsplash (1).jpg') }}"
+             class="d-block w-100 carousel-img" alt="Imagen 1">
+
+        <div class="carousel-caption d-none d-md-block">
+          <h2 class="fw-bold">Bienvenido a Knobbly</h2>
+          <p>Descubre los mejores productos para ti</p>
+          <a href="/productos" class="btn btn-primary btn-lg mt-2">Ver Productos</a>
+        </div>
+      </div>
     </div>
+
+    <!-- 2 -->
     <div class="carousel-item">
-      <img src="{{ url_for('static', filename='img/renata-adrienn-ebvCsRypmxM-unsplash (1).jpg') }}" class="d-block w-100" alt="...">
+      <div class="overlay-dark">
+        <img src="{{ url_for('static', filename='img/renata-adrienn-ebvCsRypmxM-unsplash (1).jpg') }}"
+             class="d-block w-100 carousel-img" alt="Imagen 2">
+
+        <div class="carousel-caption d-none d-md-block">
+          <h2 class="fw-bold">Nuevas Colecciones</h2>
+          <p>Lo mejor de esta temporada</p>
+        </div>
+      </div>
     </div>
+
+    <!-- 3 -->
     <div class="carousel-item">
-      <img src="{{ url_for('static', filename='img/charlie-deets-TKgOIwPVmkg-unsplash (1).jpg') }}" class="d-block w-100" alt="...">
+      <div class="overlay-dark">
+        <img src="{{ url_for('static', filename='img/charlie-deets-TKgOIwPVmkg-unsplash (1).jpg') }}"
+             class="d-block w-100 carousel-img" alt="Imagen 3">
+
+        <div class="carousel-caption d-none d-md-block">
+          <h2 class="fw-bold">Compra Seguro</h2>
+          <p>Pedidos rápidos y confiables</p>
+        </div>
+      </div>
     </div>
+
   </div>
 
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
+  <!-- CONTROLES -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselHome" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
   </button>
 
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselHome" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
   </button>
 </div>
+
+<style>
+  /* Fondo oscuro para mejorar textos */
+  .overlay-dark {
+    position: relative;
+  }
+
+  .overlay-dark::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  .carousel-img {
+    height: 550px;
+    object-fit: cover;
+  }
+
+  .carousel-caption {
+    z-index: 10;
+  }
+</style>
+
 {% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block titulo %}Productos{% endblock %}
+
+{% block contenido %}
+
+<style>
+    .producto-card {
+        transition: transform .2s ease-in-out;
+    }
+    .producto-card:hover {
+        transform: scale(1.03);
+    }
+</style>
+
+<div class="container mt-4">
+
+    <!-- BOTONES SUPERIORES -->
+    <div class="d-flex justify-content-between mb-4">
+        <a href="{{ url_for('user') }}" class="btn btn-secondary">
+            ⬅️ Volver atrás
+        </a>
+
+        <a href="{{ url_for('carrito') }}" class="btn btn-primary">
+            🛒 Ir al carrito
+        </a>
+    </div>
+
+    <h2 class="text-center mb-4">Productos disponibles</h2>
+
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-md-4 mb-4">
+            <div class="card producto-card h-100 shadow">
+
+                <img src="{{ producto.imagen }}" class="card-img-top" 
+                     onerror="this.src='https://via.placeholder.com/300'" alt="Imagen">
+
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text text-muted">${{ producto.precio }}</p>
+
+                    <!-- BOTÓN AGREGAR AL CARRITO -->
+                    <a href="{{ url_for('agregar_carrito', id=producto.id) }}" 
+                       class="btn btn-success w-100">
+                        ➕ Agregar al carrito
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

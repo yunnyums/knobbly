@@ -1,94 +1,201 @@
 {% extends "layout.html" %}
 
 {% block titulo %}
-Bienvenidouuouououous
+¡Hola, {{ current_user.nombre }}! 🐾
 {% endblock %}
 
 {% block contenido %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+  .navbar-custom {
+    background: #6f42c1;
+  }
+  .navbar-custom .navbar-brand,
+  .navbar-custom .nav-link {
+    color: white !important;
+  }
+
+  .card-cat {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: white;
+  }
+  .card-cat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+
+  .card-cat img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+
+  .cat-info {
+    padding: 1rem;
+  }
+  .cat-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #343a40;
+  }
+  .cat-desc {
+    color: #6c757d;
+    margin-top: 0.5rem;
+  }
+
+  .btn-like, .btn-dislike {
+    width: 48%;
+  }
+  .btn-like {
+    background: #28a745;
+    color: white;
+  }
+  .btn-dislike {
+    background: #dc3545;
+    color: white;
+  }
+  .btn-like:hover {
+    background: #218838;
+  }
+  .btn-dislike:hover {
+    background: #c82333;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+  <style>
+.like-btn {
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  user-select: none;
+}
+
+.like-btn.liked {
+  color: red;
+  transform: scale(1.4);
+}
+
+.like-btn:not(.liked) {
+  color: #777;
+}
+
+.like-btn:active {
+  transform: scale(0.9);
+}
+
+.heart-burst {
+  position: absolute;
+  font-size: 2rem;
+  color: red;
+  animation: burst 0.4s ease forwards;
+}
+
+@keyframes burst {
+  0% { transform: scale(0.2); opacity: 1; }
+  80% { transform: scale(1.7); opacity: 0.6; }
+  100% { transform: scale(2); opacity: 0; }
+}
+</style>
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="/">knobbly 🐱</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-        <!-- Home -->
-        <li class="nav-item">
-          <a class="nav-link" href="/">
-            <i class="fa-solid fa-house-chimney-window fa-beat fa-xs" style="color: #1c1c1c;"></i>
-            Home
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-
-        <!-- Registrate sin disabled -->
-        <li class="nav-item">
-          <a class="nav-link" href="/signup">
-            Registrate
-            <i class="fa-regular fa-user fa-bounce" style="color: #3f1556;"></i>
-          </a>
-        </li>
-
-        <!-- Inicio de sesión -->
-        <li class="nav-item">
-          <a class="nav-link" href="/signout">{{current_user.nombre}}</a>
-            Cerrar sesión
-            <i class="fa-solid fa-right-to-bracket" style="color: #0d6efd;"></i>
-          </a>
-        </li>
+<li class="nav-item">
+  <a class="nav-link" href="/productos">🛍️ Productos</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/carrito">🛒 Carrito</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/mis_pedidos">
+        <i class="fa-solid fa-box"></i> Mis pedidos
+    </a>
+</li>
 
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <span class="navbar-text me-3">
+            {{ current_user.nombre }}
+          </span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/signout">Cerrar sesión</a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
+<div class="container mt-4">
+  <h2 class="text-center mb-4">🐱 Perfiles de Gatitos</h2>
 
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for g in gatos %}
+    <div class="col">
+      <div class="card shadow-sm border-0">
 
-<div class="container">
-  <div class="row row-cols-1 row-cols-md-2 g-4">
-    {% for p in productos %}
-  <div class="col">
-    <div class="card">
-      <img src="/static/img/{{p[1]}}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{p[1]}}</h5>
-        <p class="card-text">{{p[2]}}</p>
-        <p class="card-text">{{p[3]}}</p>
+        <!-- FOTO ONLINE SEGURA -->
+        <img src="https://cataas.com/cat?{{ g[0] }}" 
+             alt="{{ g[2] }}"
+             class="img-fluid rounded-top"
+             style="height: 260px; object-fit: cover; width: 100%;">
+
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ g[2] }}</h5>
+          <p class="text-muted">{{ g[4] }}</p>
+          <p><strong>Edad:</strong> {{ g[3] }} años</p>
+          <p class="mb-3">{{ g[5] }}</p>
+
+          <div class="text-center position-relative">
+  <i class="fa-solid fa-heart like-btn" onclick="toggleLike(this)"></i>
+</div>
+
+        </div>
+
       </div>
     </div>
+    {% endfor %}
   </div>
-{% endfor %}
 </div>
-</div>
+<script>
+function toggleLike(el) {
+  // Alternar corazón
+  el.classList.toggle("liked");
+
+  // Crear animación de explosión
+  const burst = document.createElement("div");
+  burst.classList.add("heart-burst");
+  burst.innerHTML = "❤️";
+
+  el.parentElement.appendChild(burst);
+
+  // Remover animación después
+  setTimeout(() => burst.remove(), 400);
+}
+</script>
+
+
 {% endblock %}
