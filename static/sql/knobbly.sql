@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 01-12-2025 a las 21:01:35
+-- Tiempo de generación: 04-12-2025 a las 01:34:58
 -- Versión del servidor: 8.0.43
 -- Versión de PHP: 7.4.9
 
@@ -126,9 +126,16 @@ CREATE TABLE `usuario` (
   `id` int NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `correo` varchar(150) NOT NULL,
-  `clave` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `direccion` varchar(200) NOT NULL
+  `clave` varchar(200) NOT NULL,
+  `perfil` char(1) NOT NULL DEFAULT 'U'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `nombre`, `correo`, `clave`, `perfil`) VALUES
+(1, 'yo', 'regina.gonzalez2795@alumnos.udg.mx', 'scrypt:32768:8:1$2coTzqQGSFKkDNYZ$f7d9d5800b8766858a4a0b52314225bbc03566ed3ac8d350c539f1505f5de614795ef2d4f642e423390bf21112f97e87cdd6a287e4c62f3fa131c9919b1be629', 'U');
 
 -- --------------------------------------------------------
 
@@ -138,10 +145,11 @@ CREATE TABLE `usuario` (
 
 CREATE TABLE `usuarios` (
   `id` int NOT NULL,
-  `nombre_usuario` text NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `correo_electronico` text NOT NULL,
   `contrasena` text NOT NULL,
-  `fecha_registro` timestamp NOT NULL
+  `direccion` varchar(200) NOT NULL,
+  `perfil` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -188,7 +196,8 @@ ALTER TABLE `productos`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `correo` (`correo`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -229,6 +238,12 @@ ALTER TABLE `perfiles_gatos`
 --
 ALTER TABLE `productos`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
