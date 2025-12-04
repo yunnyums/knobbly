@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
+<<<<<<< HEAD
 -- Tiempo de generación: 04-12-2025 a las 16:34:57
+=======
+-- Tiempo de generación: 04-12-2025 a las 01:34:58
+>>>>>>> 4a9904cfe0d63798a50da1878233855b8e663e41
 -- Versión del servidor: 8.0.43
 -- Versión de PHP: 7.4.9
 
@@ -211,18 +215,45 @@ CREATE TABLE `usuario` (
   `id` int NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `correo` varchar(150) NOT NULL,
+<<<<<<< HEAD
   `clave` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `perfil` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'U',
   `direccion` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+=======
+  `clave` varchar(200) NOT NULL,
+  `perfil` char(1) NOT NULL DEFAULT 'U'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
+INSERT INTO `usuario` (`id`, `nombre`, `correo`, `clave`, `perfil`) VALUES
+(1, 'yo', 'regina.gonzalez2795@alumnos.udg.mx', 'scrypt:32768:8:1$2coTzqQGSFKkDNYZ$f7d9d5800b8766858a4a0b52314225bbc03566ed3ac8d350c539f1505f5de614795ef2d4f642e423390bf21112f97e87cdd6a287e4c62f3fa131c9919b1be629', 'U');
+
+-- --------------------------------------------------------
+
+>>>>>>> 4a9904cfe0d63798a50da1878233855b8e663e41
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+<<<<<<< HEAD
 INSERT INTO `usuario` (`id`, `nombre`, `correo`, `clave`, `perfil`, `direccion`) VALUES
 (1, 'prueba', 'p@gmail.com', 'scrypt:32768:8:1$nqLIxy1Rc1JfqwBy$50272b8985e4f0069b665ce8c9d1255ddbad1611e81258a4d322b8c50730b372ecc5ae83f859d7d5b3d76e5adf2c680f5354e72753f419df7347685ed81e4e73', 'U', NULL),
 (2, 'prueba2', 't@gmail.com', 'scrypt:32768:8:1$A69U4GxwKk5GxwVF$787e2bd93c6caf68702e562dc9a9b0a42c1ace74b1c692ac4fbef548bf354d1c2b94ff3a527a02f185a93fbb779ecea5a2391ed2674720f52cfcd038bffa98f0', 'A', NULL);
+=======
+CREATE TABLE `usuarios` (
+  `id` int NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `correo_electronico` text NOT NULL,
+  `contrasena` text NOT NULL,
+  `direccion` varchar(200) NOT NULL,
+  `perfil` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+>>>>>>> 4a9904cfe0d63798a50da1878233855b8e663e41
 
 --
 -- Índices para tablas volcadas
@@ -279,7 +310,8 @@ ALTER TABLE `productos`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `correo` (`correo`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -329,6 +361,15 @@ ALTER TABLE `productos`
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
+<<<<<<< HEAD
+=======
+--
+ALTER TABLE `usuario`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+>>>>>>> 4a9904cfe0d63798a50da1878233855b8e663e41
 --
 ALTER TABLE `usuario`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
