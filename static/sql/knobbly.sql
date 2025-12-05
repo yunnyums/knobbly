@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
-<<<<<<< HEAD
--- Tiempo de generación: 04-12-2025 a las 16:34:57
-=======
--- Tiempo de generación: 04-12-2025 a las 01:34:58
->>>>>>> 4a9904cfe0d63798a50da1878233855b8e663e41
+-- Tiempo de generación: 05-12-2025 a las 19:18:23
 -- Versión del servidor: 8.0.43
 -- Versión de PHP: 7.4.9
 
@@ -68,7 +64,15 @@ INSERT INTO `detalle_pedido` (`id`, `pedido_id`, `producto_id`, `cantidad`, `pre
 (8, 9, 9, 1, 9.4),
 (9, 10, 10, 1, 7.1),
 (10, 11, 13, 1, 4.8),
-(11, 11, 1, 1, 18.5);
+(11, 11, 1, 1, 18.5),
+(12, 12, 2, 1, 16.9),
+(13, 13, 1, 1, 19),
+(14, 14, 4, 1, 3.9),
+(15, 15, 13, 1, 4.8),
+(16, 15, 2, 1, 16.9),
+(17, 15, 7, 1, 8.7),
+(18, 16, 2, 1, 16.9),
+(19, 16, 1, 1, 19);
 
 -- --------------------------------------------------------
 
@@ -107,7 +111,12 @@ INSERT INTO `pedidos` (`id`, `usuario_id`, `total`, `fecha`) VALUES
 (8, 1, 34.60, '2025-12-04 15:38:04'),
 (9, 1, 34.10, '2025-12-04 15:44:37'),
 (10, 1, 7.10, '2025-12-04 15:48:53'),
-(11, 1, 23.30, '2025-12-04 16:07:33');
+(11, 1, 23.30, '2025-12-04 16:07:33'),
+(12, 1, 16.90, '2025-12-05 15:34:22'),
+(13, 1, 19.00, '2025-12-05 17:58:38'),
+(14, 1, 3.90, '2025-12-05 18:08:39'),
+(15, 1, 30.40, '2025-12-05 18:12:01'),
+(16, 1, 35.90, '2025-12-05 18:20:14');
 
 -- --------------------------------------------------------
 
@@ -184,7 +193,7 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `nombre_producto`, `descripcion`, `precio`, `Imagen`) VALUES
-(1, 'RoyalCanin IndoorAdult', 'Croquetas para gato adulto control de bolas de pelo RoyalCanin', 18.5, 'royalcanin_indooradult.jpg'),
+(1, 'RoyalCanin IndoorAdult', '18.0', 19, 'royalcanin_indooradult.jpg'),
 (2, 'RoyalCanin KittenDry', 'Alimento seco nutricion balanceada para gatitos RoyalCanin', 16.9, 'royalcanin_kittendry.jpg'),
 (3, 'Whiskas TunaBites', 'Snacks sabor atun para gato Whiskas', 4.2, 'whiskas_tunabites.jpg'),
 (4, 'Whiskas ChickenCrunch', 'Premio crujiente sabor pollo Whiskas', 3.9, 'whiskas_chickencrunch.jpg'),
@@ -203,7 +212,8 @@ INSERT INTO `productos` (`id`, `nombre_producto`, `descripcion`, `precio`, `Imag
 (17, 'Orijen CatTreats', 'Premios naturales para gato Orijen', 9.9, 'orijen_cattreats.jpg'),
 (18, 'Orijen SixFishDry', 'Alimento premium de seis pescados para gato Orijen', 24.7, 'orijen_sixfishdry.jpg'),
 (19, 'BlueBuffalo CatTurkey', 'Alimento de pavo para gato BlueBuffalo', 19.3, 'bluebuffalo_catturkey.jpg'),
-(20, 'BlueBuffalo IndoorMix', 'Formula interior para gato adulto BlueBuffalo', 21.1, 'bluebuffalo_indoormix.jpg');
+(20, 'BlueBuffalo IndoorMix', 'Formula interior para gato adulto BlueBuffalo', 21.1, 'bluebuffalo_indoormix.jpg'),
+(21, 'RoyalCanin ', 'si', 18, 'royalcanin_indooradult.jpg');
 
 -- --------------------------------------------------------
 
@@ -215,45 +225,18 @@ CREATE TABLE `usuario` (
   `id` int NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `correo` varchar(150) NOT NULL,
-<<<<<<< HEAD
   `clave` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `perfil` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'U',
   `direccion` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-=======
-  `clave` varchar(200) NOT NULL,
-  `perfil` char(1) NOT NULL DEFAULT 'U'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nombre`, `correo`, `clave`, `perfil`) VALUES
-(1, 'yo', 'regina.gonzalez2795@alumnos.udg.mx', 'scrypt:32768:8:1$2coTzqQGSFKkDNYZ$f7d9d5800b8766858a4a0b52314225bbc03566ed3ac8d350c539f1505f5de614795ef2d4f642e423390bf21112f97e87cdd6a287e4c62f3fa131c9919b1be629', 'U');
-
--- --------------------------------------------------------
-
->>>>>>> 4a9904cfe0d63798a50da1878233855b8e663e41
---
--- Volcado de datos para la tabla `usuario`
---
-
-<<<<<<< HEAD
 INSERT INTO `usuario` (`id`, `nombre`, `correo`, `clave`, `perfil`, `direccion`) VALUES
-(1, 'prueba', 'p@gmail.com', 'scrypt:32768:8:1$nqLIxy1Rc1JfqwBy$50272b8985e4f0069b665ce8c9d1255ddbad1611e81258a4d322b8c50730b372ecc5ae83f859d7d5b3d76e5adf2c680f5354e72753f419df7347685ed81e4e73', 'U', NULL),
+(1, 'pruebe', 'p@gmail.com', 'scrypt:32768:8:1$nqLIxy1Rc1JfqwBy$50272b8985e4f0069b665ce8c9d1255ddbad1611e81258a4d322b8c50730b372ecc5ae83f859d7d5b3d76e5adf2c680f5354e72753f419df7347685ed81e4e73', 'U', NULL),
 (2, 'prueba2', 't@gmail.com', 'scrypt:32768:8:1$A69U4GxwKk5GxwVF$787e2bd93c6caf68702e562dc9a9b0a42c1ace74b1c692ac4fbef548bf354d1c2b94ff3a527a02f185a93fbb779ecea5a2391ed2674720f52cfcd038bffa98f0', 'A', NULL);
-=======
-CREATE TABLE `usuarios` (
-  `id` int NOT NULL,
-  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `correo_electronico` text NOT NULL,
-  `contrasena` text NOT NULL,
-  `direccion` varchar(200) NOT NULL,
-  `perfil` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
->>>>>>> 4a9904cfe0d63798a50da1878233855b8e663e41
 
 --
 -- Índices para tablas volcadas
@@ -310,8 +293,7 @@ ALTER TABLE `productos`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `correo` (`correo`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -321,13 +303,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_pedido`
 --
 ALTER TABLE `detalle_pedido`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `mensajes_chat`
@@ -339,7 +321,7 @@ ALTER TABLE `mensajes_chat`
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos_detalle`
@@ -357,22 +339,13 @@ ALTER TABLE `perfiles_gatos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
-<<<<<<< HEAD
-=======
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `usuarios`
->>>>>>> 4a9904cfe0d63798a50da1878233855b8e663e41
---
-ALTER TABLE `usuario`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
