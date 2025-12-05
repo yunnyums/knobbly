@@ -4,15 +4,14 @@
 
 {% block contenido %}
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3 sticky-top">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="/">
-      <i class="fa-solid fa-shop fa-bounce text-primary"></i> Knobbly Store
+    <a class="navbar-brand fw-bold text-primary" href="/">
+      <i class="fa-solid fa-shop fa-bounce"></i> Knobbly Store
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -20,19 +19,19 @@
       <ul class="navbar-nav ms-auto align-items-center">
 
         <li class="nav-item">
-          <a class="nav-link active" href="/">
+          <a class="nav-link active fw-semibold" href="/">
             <i class="fa-solid fa-house"></i> Inicio
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/productos">
+          <a class="nav-link fw-semibold" href="/productos">
             <i class="fa-solid fa-store"></i> Productos
           </a>
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" data-bs-toggle="dropdown">
             Cuenta
           </a>
           <ul class="dropdown-menu">
@@ -41,26 +40,32 @@
           </ul>
         </li>
 
+        <li class="nav-item">
+          <a class="btn btn-outline-primary ms-3" href="/carrito">
+            🛒 Carrito
+          </a>
+        </li>
+
       </ul>
     </div>
   </div>
 </nav>
 
 
-<!-- CAROUSEL -->
-<div id="carouselHome" class="carousel slide">
+<!-- ================= CAROUSEL ================= -->
+<div id="carouselHome" class="carousel slide main-carousel">
   <div class="carousel-inner">
 
     <!-- 1 -->
     <div class="carousel-item active">
       <div class="overlay-dark">
         <img src="{{ url_for('static', filename='img/charlie-deets-TKgOIwPVmkg-unsplash (1).jpg') }}"
-             class="d-block w-100 carousel-img" alt="Imagen 1">
+             class="d-block w-100 carousel-img">
 
         <div class="carousel-caption d-none d-md-block">
-          <h2 class="fw-bold">Bienvenido a Knobbly</h2>
+          <h2 class="fw-bold display-5">Bienvenido a Knobbly</h2>
           <p>Descubre los mejores productos para ti</p>
-          <a href="/productos" class="btn btn-primary btn-lg mt-2">Ver Productos</a>
+          <a href="/productos" class="btn btn-primary btn-lg mt-2 shadow">Ver Productos</a>
         </div>
       </div>
     </div>
@@ -69,10 +74,10 @@
     <div class="carousel-item">
       <div class="overlay-dark">
         <img src="{{ url_for('static', filename='img/renata-adrienn-ebvCsRypmxM-unsplash (1).jpg') }}"
-             class="d-block w-100 carousel-img" alt="Imagen 2">
+             class="d-block w-100 carousel-img">
 
         <div class="carousel-caption d-none d-md-block">
-          <h2 class="fw-bold">Nuevas Colecciones</h2>
+          <h2 class="fw-bold display-5">Nuevas Colecciones</h2>
           <p>Lo mejor de esta temporada</p>
         </div>
       </div>
@@ -82,10 +87,10 @@
     <div class="carousel-item">
       <div class="overlay-dark">
         <img src="{{ url_for('static', filename='img/charlie-deets-TKgOIwPVmkg-unsplash (1).jpg') }}"
-             class="d-block w-100 carousel-img" alt="Imagen 3">
+             class="d-block w-100 carousel-img">
 
         <div class="carousel-caption d-none d-md-block">
-          <h2 class="fw-bold">Compra Seguro</h2>
+          <h2 class="fw-bold display-5">Compra Seguro</h2>
           <p>Pedidos rápidos y confiables</p>
         </div>
       </div>
@@ -103,12 +108,49 @@
   </button>
 </div>
 
-<style>
-  /* Fondo oscuro para mejorar textos */
-  .overlay-dark {
-    position: relative;
-  }
 
+<!-- ================= FOOTER ================= -->
+<footer class="footer text-white mt-5">
+  <div class="container py-4">
+
+    <div class="row">
+
+      <div class="col-md-4">
+        <h5 class="fw-bold">Knobbly Store</h5>
+        <p class="small">Productos de calidad, envíos rápidos y la mejor atención.</p>
+      </div>
+
+      <div class="col-md-4">
+        <h5 class="fw-bold">Navegación</h5>
+        <ul class="list-unstyled small">
+          <li><a href="/" class="footer-link">Inicio</a></li>
+          <li><a href="/productos" class="footer-link">Productos</a></li>
+          <li><a href="/signin" class="footer-link">Iniciar Sesión</a></li>
+          <li><a href="/signup" class="footer-link">Registro</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-4">
+        <h5 class="fw-bold">Contacto</h5>
+        <p class="small">Correo: soporte@knobbly.com</p>
+        <p class="small">Tel: +52 55 0000 0000</p>
+      </div>
+
+    </div>
+
+    <hr class="border-light">
+
+    <p class="text-center small m-0">© 2025 Knobbly Store — Todos los derechos reservados</p>
+
+  </div>
+</footer>
+
+
+<!-- ================= ESTILOS EXTRA ================= -->
+<style>
+
+  /* Overlay para el carousel */
+  .overlay-dark { position: relative; }
   .overlay-dark::after {
     content: "";
     position: absolute;
@@ -122,9 +164,28 @@
     object-fit: cover;
   }
 
-  .carousel-caption {
-    z-index: 10;
+  /* Card hover */
+  .hover-card {
+    transition: transform .25s ease, box-shadow .25s ease;
   }
+  .hover-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+
+  /* Footer */
+  .footer {
+    background: #1a1a1a;
+  }
+  .footer-link {
+    color: #cfcfcf;
+    text-decoration: none;
+  }
+  .footer-link:hover {
+    text-decoration: underline;
+    color: white;
+  }
+
 </style>
 
 {% endblock %}

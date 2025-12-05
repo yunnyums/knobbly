@@ -1,52 +1,96 @@
-<<<<<<< HEAD
 {% extends 'layout.html' %}
 
 {% block titulo %}Productos{% endblock %}
 
 {% block contenido %}
 
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="/">
+      <i class="fa-solid fa-shop text-primary"></i> Knobbly Store
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navProductos">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navProductos">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="/user">Inicio</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active fw-bold" href="/productos">Productos</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/carrito">
+            <i class="fa-solid fa-cart-shopping"></i> Carrito
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
 <style>
     .producto-card {
-        transition: transform .2s ease-in-out;
+        border-radius: 16px;
+        transition: transform .2s ease-in-out, box-shadow .2s ease-in-out;
     }
     .producto-card:hover {
-        transform: scale(1.03);
+        transform: translateY(-6px);
+        box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+    }
+
+    .precio {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #d14870;
+    }
+
+    footer {
+        background: #7b10df;
+        color: white;
+        padding: 15px;
+        margin-top: 60px;
+        text-align: center;
     }
 </style>
 
 <div class="container mt-4">
 
-    <!-- BOTONES SUPERIORES -->
-    <div class="d-flex justify-content-between mb-4">
-        <a href="{{ url_for('user') }}" class="btn btn-secondary">
-            ⬅️ Volver atrás
-        </a>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary">Productos disponibles</h2>
 
         <a href="{{ url_for('carrito') }}" class="btn btn-primary">
-            🛒 Ir al carrito
+            🛒 Ver carrito
         </a>
     </div>
-
-    <h2 class="text-center mb-4">Productos disponibles</h2>
 
     <div class="row">
         {% for producto in productos %}
         <div class="col-md-4 mb-4">
             <div class="card producto-card h-100 shadow">
 
-                <img src="{{ producto.imagen }}" class="card-img-top" 
-                     onerror="this.src='https://via.placeholder.com/300'" alt="Imagen">
+                <img src="{{ producto.imagen }}"
+                     class="card-img-top" 
+                     onerror="this.src='https://via.placeholder.com/300'"
+                     alt="imagen">
 
                 <div class="card-body text-center">
-                    <h5 class="card-title">{{ producto.nombre }}</h5>
-                    <p class="card-text text-muted">${{ producto.precio }}</p>
+                    <h5 class="card-title fw-bold">{{ producto.nombre }}</h5>
+                    <p class="precio">${{ producto.precio }}</p>
 
-                    <!-- BOTÓN AGREGAR AL CARRITO -->
                     <a href="{{ url_for('agregar_carrito', id=producto.id) }}" 
                        class="btn btn-success w-100">
                         ➕ Agregar al carrito
                     </a>
-
                 </div>
             </div>
         </div>
@@ -55,144 +99,9 @@
 
 </div>
 
-{% endblock %}
-=======
-{% extends "layout.html" %}
-{% block titulo %}  administrador {% endblock %}
-{% block contenido %}
-
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">
-            <i class="fa-solid fa-house fa-bounce"></i>
-          <link rel="stylesheet" href="{{ url_for('static',filename='css/all.min.css".css')}}"">
-          <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}"">
-            Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/susuario">Usuarios</a></li>
-            <li><a class="dropdown-item" href="/sProductos">Productos</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-
-      </form>
-    </div>
-  </div>
-</nav>
-<div class="container">
-  <table class="table table-hover">
-    <thead>
-      <th>ID</th>
-      <th>NOMBRE</th>
-      <th>CARRITO DE COMPRAS</th>
-      <th>CHAT</th>
-      <th>PERFILES</th>
-      <th>PRODUCTOS</th>
-      <th>USUARIOS</th>
-      <th colpan="2">&nbsp;</th>
-    </thead>
-    <tbody>
-      {% for p in productos %}
-      <tr>
-        <td>{{p[0]}}</td>
-        <td>{{p[1]}}</td>
-        <td>{{p[2]}}</td>
-        <td>{{p[3]}}</td>
-        <td>{{p[4]}}</td>
-        <td>{{p[5]}}</td>
-        <td><img src="/static/img/{{p[6]}}" height="80" alt=""></td>
-        <td>
-          <!-- Button Editar -->
-          button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editar{{p[0]}}">
-          <i class="fa-solid fa-user-pen"></i>
-          Editar
-          </button>
-        </td>
-        <td>&nbsp;</td>
-      </tr>
-      
-
-      <!-- Modal Editar -->
-      <div class="modal fade" id="editar{{p[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Usuario</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="/uUsuario" method="post">
-            <div class="modal-body">
-              <!-- Nombre -->
-              <label for="inputPassword5" class="form-label">Nombre</label>
-              <input type="nombre" name="nombre" value="{{p[1]}}" id="inputPassword5" class="form-control" aria-describedby="nombrecompleto">
-              <div id="nombrecompleto" class="form-text">
-                Introduce un nombre completo
-              </div>
-              <!-- Correo -->
-              <label for="correo" class="form-label">Correo</label>
-              <input type="email" name="correo" value="{{p[2]}}" id="correo" class="form-control" aria-describedby="ayudacorreo">
-              <div id="ayudacorreo" class="form-text">
-                Introduce un correo
-              </div>
-              <!-- Clave -->
-            <label for="clave" class="form-label">Clave</label>
-            <input type="password" name="clave" value="{{p[3]}}" id="clave" class="form-control" aria-describedby="ayudaclave">
-            <div id="ayudaclave" class="form-text">
-              Introduce una clave
-            </div>
-
-              <!-- Perfil -->
-              <label for="perfil" class="form-label">Perfil</label>
-              <select class="form-select" aria-label="Default select example">
-              <option>Selecciona un perfil</option>
-              {% if p[4] == "A" %}
-              <option value="A">Administrador</option>
-              <option selected ="U">Usuario</option>
-              {% else %}
-              <option value="A">Administrador</option>
-              <option selected="U">Usuario</option>
-              {% endif %}
-            
-          </select>
-            <div id="ayudaperfil" class="form-text">
-              Selecciona un perfil
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-            </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+<!-- FOOTER -->
+<footer>
+    Knobbly Store © {{ year }} — Todos los derechos reservados
+</footer>
 
 {% endblock %}
->>>>>>> 4a9904cfe0d63798a50da1878233855b8e663e41
