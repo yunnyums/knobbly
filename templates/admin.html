@@ -4,6 +4,51 @@
 
 {% block contenido %}
 
+<!-- ================= NAVBAR ADMIN ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+
+    <a class="navbar-brand fw-bold" href="/">Knobbly Admin</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="adminNav">
+
+      <!-- LINKS IZQUIERDA -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('admin_productos') }}">
+            <i class="fa-solid fa-box"></i> Productos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('sUsuario') }}">
+            <i class="fa-solid fa-users"></i> Usuarios
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="modal" data-bs-target="#ajustesModal">
+            <i class="fa-solid fa-gear"></i> Ajustes
+          </a>
+        </li>
+
+      </ul>
+
+      <!-- BOTÓN CERRAR SESIÓN -->
+      <a href="/" class="btn btn-danger">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </a>
+
+    </div>
+  </div>
+</nav>
+
+<!-- ================= ESTILOS ================= -->
 <style>
   .action-container {
     margin-top: 40px;
@@ -42,6 +87,7 @@
   }
 </style>
 
+<!-- ================= PANEL PRINCIPAL ================= -->
 
 <div class="container text-center mt-5">
     <h2 class="fw-bold">Panel de Administración</h2>
@@ -49,25 +95,24 @@
 
     <div class="action-container">
 
-        <!-- CARD 1 -->
+        <!-- CARD 1 → PRODUCTOS -->
         <div class="action-card">
             <i class="fa fa-box-open fa-3x text-primary"></i>
             <h5>Productos</h5>
             <p>Administrar productos</p>
-<a href="{{ url_for('admin_productos') }}" class="btn btn-primary mt-2">Entrar</a>
+            <a href="{{ url_for('admin_productos') }}" class="btn btn-primary mt-2">Entrar</a>
         </div>
 
-        <!-- CARD 2 -->
+        <!-- CARD 2 → USUARIOS -->
         <div class="action-card">
             <i class="fa fa-users fa-3x text-success"></i>
             <h5>Usuarios</h5>
             <p>Administrar usuarios</p>
-<a href="{{ url_for('sUsuario') }}" class="btn btn-success mt-2">Entrar</a>
+            <a href="{{ url_for('sUsuario') }}" class="btn btn-success mt-2">Entrar</a>
         </div>
 
     </div>
 </div>
-
 
 <!-- ================= MODAL DE AJUSTES ================= -->
 
