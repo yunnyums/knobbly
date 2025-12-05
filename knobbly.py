@@ -5,6 +5,7 @@ from flask_mysqldb import MySQL
 from models.entities.User import User
 from models.ModelUser import ModelUser
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask import session
 
 # ----------------------------------------
 # Configuración de Flask y MySQL
@@ -112,27 +113,107 @@ def admin():
     cursor.close()
 
     return render_template('admin.html', usuarios=usuarios, pedidos=pedidos)
-
-@knobblyApp.route('/admin/usuario/editar', methods=['POST'])
+# ------------------------------
+# ADMIN - LISTAR PRODUCTOS
+# ------------------------------
+@knobblyApp.route('/admin/productos')
 @login_required
-def admin_editar_usuario():
-    if current_user.perfil != "A":
-        return redirect('/')
+def admin_productos():
+    if current_user.perfil != 'A':
+        return redirect('/user')
 
-    id = request.form['id']
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT id, nombre_producto, precio, imagen FROM productos")
+    productos = cursor.fetchall()
+    cursor.close()
+
+    return render_template('admin_productos.html', productos=productos)
+
+@knobblyApp.route('/eliminar_del_carrito/<int:id>')
+def eliminar_del_carrito(id):
+    print("👉 ENTRÓ A LA RUTA eliminar_del_carrito")
+    print("ID RECIBIDO:", id)
+    print("CARRITO ANTES:", session.get("carrito"))
+
+    carrito = session.get("carrito", [])
+    carrito = [item for item in carrito if item[0] != id]
+    session["carrito"] = carrito
+
+    print("CARRITO DESPUÉS:", session["carrito"])
+    return redirect(url_for("carrito"))
+
+# ------------------------------
+# ADMIN - CREAR PRODUCTO
+# ------------------------------
+@knobblyApp.route('/admin/productos/crear', methods=['POST'])
+@login_required
+def crear_producto_admin():
+    if current_user.perfil != 'A':
+        return redirect('/user')
+
     nombre = request.form['nombre']
-    correo = request.form['correo']
-    perfil = request.form['perfil']
+    descripcion = request.form['descripcion']
+    precio = request.form['precio']
+    imagen = request.form['imagen']
 
     cursor = db.connection.cursor()
     cursor.execute("""
-        UPDATE usuario SET nombre=%s, correo=%s, perfil=%s WHERE id=%s
-    """, (nombre, correo, perfil, id))
+        INSERT INTO productos (nombre_producto, descripcion, precio, Imagen)
+        VALUES (%s, %s, %s, %s)
+    """, (nombre, descripcion, precio, imagen))
+
     db.connection.commit()
     cursor.close()
 
-    flash("Usuario actualizado correctamente")
-    return redirect('/admin')
+    return redirect(url_for('admin_productos'))
+
+
+# ------------------------------
+# ADMIN - EDITAR PRODUCTO
+# ------------------------------
+@knobblyApp.route('/admin/productos/editar/<int:id>', methods=['POST'])
+@login_required
+def editar_producto_admin(id):
+    if current_user.perfil != 'A':
+        return redirect('/user')
+
+    nombre = request.form['nombre']
+    descripcion = request.form['descripcion']
+    precio = request.form['precio']
+    imagen = request.form['imagen']
+
+    cursor = db.connection.cursor()
+    cursor.execute("""
+        UPDATE productos
+        SET nombre_producto = %s,
+            descripcion = %s,
+            precio = %s,
+            Imagen = %s
+        WHERE id = %s
+    """, (nombre, descripcion, precio, imagen, id))
+
+    db.connection.commit()
+    cursor.close()
+
+    return redirect(url_for('admin_productos'))
+
+
+# ------------------------------
+# ADMIN - ELIMINAR PRODUCTO
+# ------------------------------
+@knobblyApp.route('/admin/productos/eliminar/<int:id>', methods=['POST'])
+@login_required
+def eliminar_producto_admin(id):
+    if current_user.perfil != 'A':
+        return redirect('/user')
+
+    cursor = db.connection.cursor()
+    cursor.execute("DELETE FROM productos WHERE id = %s", (id,))
+    db.connection.commit()
+    cursor.close()
+
+    return redirect(url_for('admin_productos'))
+
 
 # ----------------------------------------
 # Productos
@@ -309,6 +390,47 @@ def iUsuario():
 
     flash('Cuenta creada correctamente')
     return redirect(url_for("sUsuario"))
+@knobblyApp.route('/cUsuario', methods=['POST'])
+def cUsuario():
+    nombre = request.form['nombre']
+    correo = request.form['correo']
+    clave = request.form['clave']
+    perfil = request.form['perfil']
+
+    cursor = db.connection.cursor()
+    cursor.execute("""
+        INSERT INTO usuario (nombre, correo, clave, perfil)
+        VALUES (%s, %s, %s, %s)
+    """, (nombre, correo, clave, perfil))
+    db.connection.commit()
+    cursor.close()
+
+    return redirect('/sUsuario')
+@knobblyApp.route('/uUsuario', methods=['POST'])
+def uUsuario():
+    id = request.form['id']
+    nombre = request.form['nombre']
+    correo = request.form['correo']
+    clave = request.form['clave']
+    perfil = request.form['perfil']
+
+    cursor = db.connection.cursor()
+    cursor.execute("""
+        UPDATE usuario SET nombre=%s, correo=%s, clave=%s, perfil=%s
+        WHERE id=%s
+    """, (nombre, correo, clave, perfil, id))
+    db.connection.commit()
+    cursor.close()
+
+    return redirect('/sUsuario')
+@knobblyApp.route('/dUsuario/<int:id>', methods=['POST'])
+def dUsuario(id):
+    cursor = db.connection.cursor()
+    cursor.execute("DELETE FROM usuario WHERE id=%s", (id,))
+    db.connection.commit()
+    cursor.close()
+    return redirect('/sUsuario')
+
 
 # ----------------------------------------
 # Ejecutar Aplicación

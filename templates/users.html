@@ -1,49 +1,44 @@
 {% extends "layout.html" %}
-{% block titulo %}  administrador {% endblock %}
+{% block titulo %}administrador{% endblock %}
 {% block contenido %}
 
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">
-            <i class="fa-solid fa-house fa-bounce"></i>
-          <link rel="stylesheet" href="{{ url_for('static',filename='css/all.min.css".css')}}"">
-          <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}"">
-            Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/sUsuario">Usuarios</a></li>
-            <li><a class="dropdown-item" href="/sProductos">Productos</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
 
-      </form>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link active" href="admin">
+            <i class="fa-solid fa-house fa-bounce"></i>
+            Home
+          </a>
+        </li>
+
+       
+
+      </ul>
+
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearUsuario">
+        ➕ Nuevo Usuario
+      </button>
+
     </div>
   </div>
 </nav>
-<div class="container">
+
+
+
+
+<div class="container mt-4">
+
   <table class="table table-hover">
     <thead>
       <th>ID</th>
@@ -51,84 +46,131 @@
       <th>CORREO</th>
       <th>CLAVE</th>
       <th>PERFIL</th>
-      <th colpan="2">&nbsp;</th>
+      <th colspan="2">ACCIONES</th>
     </thead>
+
     <tbody>
       {% for u in usuarios %}
       <tr>
         <td>{{u[0]}}</td>
         <td>{{u[1]}}</td>
         <td>{{u[2]}}</td>
-        <td>{{u[3]|truncate(25)}}</td>
+        <td>{{u[3] | truncate(25)}}</td>
         <td>{{u[4]}}</td>
+
         <td>
-          
-          button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editar{{u[0]}}">
-          <i class="fa-solid fa-user-pen"></i>
-          Editar
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editar{{u[0]}}">
+            <i class="fa-solid fa-user-pen"></i> Editar
           </button>
         </td>
-        <td>&nbsp;</td>
-      </tr>
-      
 
-      <!-- Modal Editar -->
-      <div class="modal fade" id="editar{{u[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <td>
+          <form action="/dUsuario/{{u[0]}}" method="post" onsubmit="return confirm('¿Eliminar usuario?');">
+            <button class="btn btn-danger">
+              <i class="fa-solid fa-trash"></i> Eliminar
+            </button>
+          </form>
+        </td>
+
+      </tr>
+
+
+      <!-- MODAL EDITAR USUARIO -->
+      <div class="modal fade" id="editar{{u[0]}}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
+
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Usuario</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="/uUsuario" method="post">
-            <div class="modal-body">
-              <!-- Nombre -->
-              <label for="inputPassword5" class="form-label">Nombre</label>
-              <input type="nombre" name="nombre" value="{{u[1]}}" id="inputPassword5" class="form-control" aria-describedby="nombrecompleto">
-              <div id="nombrecompleto" class="form-text">
-                Introduce un nombre completo
-              </div>
-              <!-- Correo -->
-              <label for="correo" class="form-label">Correo</label>
-              <input type="email" name="correo" value="{{u[2]}}" id="correo" class="form-control" aria-describedby="ayudacorreo">
-              <div id="ayudacorreo" class="form-text">
-                Introduce un correo
-              </div>
-              <!-- Clave -->
-            <label for="clave" class="form-label">Clave</label>
-            <input type="password" name="clave" value="{{u[3]}}" id="clave" class="form-control" aria-describedby="ayudaclave">
-            <div id="ayudaclave" class="form-text">
-              Introduce una clave
+              <h1 class="modal-title fs-5">Editar Usuario</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
+            <form action="/uUsuario" method="post">
+            <div class="modal-body">
+
+              <input type="hidden" name="id" value="{{u[0]}}">
+
+              <!-- Nombre -->
+              <label class="form-label">Nombre</label>
+              <input type="text" name="nombre" class="form-control" value="{{u[1]}}" required>
+
+              <!-- Correo -->
+              <label class="form-label mt-3">Correo</label>
+              <input type="email" name="correo" class="form-control" value="{{u[2]}}" required>
+
+              <!-- Clave -->
+              <label class="form-label mt-3">Clave</label>
+              <input type="password" name="clave" class="form-control" value="{{u[3]}}" required>
+
               <!-- Perfil -->
-              <label for="perfil" class="form-label">Perfil</label>
-              <select class="form-select" aria-label="Default select example">
-              <option>Selecciona un perfil</option>
-              {% if u[4] == "A" %}
-              <option value="A">Administrador</option>
-              <option selected ="U">Usuario</option>
-              {% else %}
-              <option value="A">Administrador</option>
-              <option selected="U">Usuario</option>
-              {% endif %}
-            
-          </select>
-            <div id="ayudaperfil" class="form-text">
-              Selecciona un perfil
+              <label class="form-label mt-3">Perfil</label>
+              <select class="form-select" name="perfil">
+                <option value="A" {% if u[4] == "A" %}selected{% endif %}>Administrador</option>
+                <option value="U" {% if u[4] == "U" %}selected{% endif %}>Usuario</option>
+              </select>
+
             </div>
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
               <button type="submit" class="btn btn-primary">Guardar Cambios</button>
             </div>
+
             </form>
+
           </div>
         </div>
       </div>
+
       {% endfor %}
     </tbody>
   </table>
+
 </div>
+
+
+
+
+<!-- MODAL CREAR USUARIO -->
+<div class="modal fade" id="crearUsuario" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Crear Usuario</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="/cUsuario" method="post">
+      <div class="modal-body">
+
+        <label class="form-label">Nombre</label>
+        <input type="text" name="nombre" class="form-control" required>
+
+        <label class="form-label mt-3">Correo</label>
+        <input type="email" name="correo" class="form-control" required>
+
+        <label class="form-label mt-3">Clave</label>
+        <input type="password" name="clave" class="form-control" required>
+
+        <label class="form-label mt-3">Perfil</label>
+        <select class="form-select" name="perfil" required>
+          <option value="A">Administrador</option>
+          <option value="U" selected>Usuario</option>
+        </select>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-success">Crear</button>
+      </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
 
 {% endblock %}

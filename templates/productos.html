@@ -4,7 +4,6 @@
 
 {% block contenido %}
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
   <div class="container">
     <a class="navbar-brand fw-bold" href="/">
@@ -20,7 +19,7 @@
       <ul class="navbar-nav ms-auto">
 
         <li class="nav-item">
-          <a class="nav-link" href="/user">Inicio</a>
+          <a class="nav-link" href="/">Inicio</a>
         </li>
 
         <li class="nav-item">
@@ -73,33 +72,37 @@
         </a>
     </div>
 
-    <div class="row">
-        {% for producto in productos %}
-        <div class="col-md-4 mb-4">
-            <div class="card producto-card h-100 shadow">
+   <div class="row">
+    {% for producto in productos %}
+    <div class="col-md-4 mb-4">
+        <div class="card producto-card h-100 shadow">
 
-                <img src="{{ producto.imagen }}"
-                     class="card-img-top" 
-                     onerror="this.src='https://via.placeholder.com/300'"
-                     alt="imagen">
+            <!-- IMAGEN (columna: Imagen) -->
+            <img src="{{ url_for('static', filename='img/' ~ producto.Imagen) }}"
+                 class="card-img-top"
+                 onerror="this.src='https://via.placeholder.com/300'"
+                 alt="imagen del producto">
 
-                <div class="card-body text-center">
-                    <h5 class="card-title fw-bold">{{ producto.nombre }}</h5>
-                    <p class="precio">${{ producto.precio }}</p>
+            <div class="card-body text-center">
 
-                    <a href="{{ url_for('agregar_carrito', id=producto.id) }}" 
-                       class="btn btn-success w-100">
-                        ➕ Agregar al carrito
-                    </a>
-                </div>
+                <!-- TITULO (columna: nombre_producto) -->
+                <h5 class="card-title fw-bold">{{ producto.nombre_producto }}</h5>
+
+                <!-- PRECIO (columna: precio) -->
+                <p class="precio">${{ producto.precio }}</p>
+
+                <a href="{{ url_for('agregar_carrito', id=producto.id) }}" 
+                   class="btn btn-success w-100">
+                    ➕ Agregar al carrito
+                </a>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
 
 </div>
 
-<!-- FOOTER -->
 <footer>
     Knobbly Store © {{ year }} — Todos los derechos reservados
 </footer>

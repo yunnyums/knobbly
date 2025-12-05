@@ -7,195 +7,199 @@
 {% block contenido %}
 
 <style>
-  body {
-    background-color: #f8f9fa;
-  }
-  .navbar-custom {
-    background: #6f42c1;
-  }
-  .navbar-custom .navbar-brand,
-  .navbar-custom .nav-link {
-    color: white !important;
-  }
 
-  .card-cat {
-    border: none;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    background-color: white;
-  }
-  .card-cat:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  }
+/* ====== ESTILO NIVEL DIOS ====== */
 
-  .card-cat img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-  }
+body {
+  background: linear-gradient(135deg, #f3e8ff, #fff);
+  animation: fadeIn 1s ease-out;
+}
 
-  .cat-info {
-    padding: 1rem;
-  }
-  .cat-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #343a40;
-  }
-  .cat-desc {
-    color: #6c757d;
-    margin-top: 0.5rem;
-  }
+/* NAVBAR */
+.navbar-custom {
+  background: linear-gradient(90deg, #7b2cbf, #9d4edd);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.navbar-custom .nav-link,
+.navbar-custom .navbar-brand {
+  color: white !important;
+  font-weight: 600;
+}
 
-  .btn-like, .btn-dislike {
-    width: 48%;
-  }
-  .btn-like {
-    background: #28a745;
-    color: white;
-  }
-  .btn-dislike {
-    background: #dc3545;
-    color: white;
-  }
-  .btn-like:hover {
-    background: #218838;
-  }
-  .btn-dislike:hover {
-    background: #c82333;
-  }
+/* ===== CARDS ===== */
 
-  .actions {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-  }
-  <style>
-.like-btn {
-  font-size: 1.4rem;
+.card-cat {
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  transition: transform .2s ease, box-shadow .2s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+}
+
+/* Tilt suave */
+.card-cat:hover {
+  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+  transform: rotateX(6deg) rotateY(-6deg);
+}
+
+/* Imagen completa */
+.card-cat img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover; /* Ya no recorta, muestra toda la imagen */
+}
+
+/* Info */
+.cat-info {
+  padding: 1rem;
+  text-align: center;
+}
+.cat-name {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #343a40;
+}
+.cat-desc {
+  color: #6c757d;
+}
+
+/* Corazón */
+.like-btn {
+  font-size: 1.8rem;
+  cursor: pointer;
   user-select: none;
+  transition: transform .2s ease;
 }
 
 .like-btn.liked {
-  color: red;
-  transform: scale(1.4);
+  color: #ff3860;
+  transform: scale(1.45);
 }
 
 .like-btn:not(.liked) {
-  color: #777;
+  color: #bbb;
 }
 
-.like-btn:active {
-  transform: scale(0.9);
-}
-
+/* Corazón explosión */
 .heart-burst {
   position: absolute;
   font-size: 2rem;
-  color: red;
-  animation: burst 0.4s ease forwards;
+  color: #ff3860;
+  animation: burst .45s ease forwards;
 }
 
 @keyframes burst {
-  0% { transform: scale(0.2); opacity: 1; }
-  80% { transform: scale(1.7); opacity: 0.6; }
+  0% { transform: scale(.2); opacity: 1; }
+  80% { transform: scale(1.7); opacity: .6; }
   100% { transform: scale(2); opacity: 0; }
 }
-</style>
+
+/* Fade inicial */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 </style>
+
+<!-- AUDIO DE MIAU -->
+<audio id="miauSound" src="/static/miau.mp3"></audio>
 
 <nav class="navbar navbar-expand-lg navbar-custom">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">knobbly 🐱</a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-      aria-label="Toggle navigation">
+      data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto">
 
-<li class="nav-item">
-  <a class="nav-link" href="/productos">🛍️ Productos</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="/carrito">🛒 Carrito</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/mis_pedidos">
-        <i class="fa-solid fa-box"></i> Mis pedidos
-    </a>
-</li>
+        <li class="nav-item"><a class="nav-link" href="/productos">🛍️ Productos</a></li>
+        <li class="nav-item"><a class="nav-link" href="/carrito">🛒 Carrito</a></li>
+        <li class="nav-item"><a class="nav-link" href="/mis_pedidos"><i class="fa-solid fa-box"></i> Mis pedidos</a></li>
 
       </ul>
 
       <ul class="navbar-nav">
         <li class="nav-item">
-          <span class="navbar-text me-3">
-            {{ current_user.nombre }}
-          </span>
+          <span class="navbar-text me-3">{{ current_user.nombre }}</span>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/signout">Cerrar sesión</a>
-        </li>
+        <li class="nav-item"><a class="nav-link" href="/signout">Cerrar sesión</a></li>
       </ul>
+
     </div>
   </div>
 </nav>
+
 <div class="container mt-4">
   <h2 class="text-center mb-4">🐱 Perfiles de Gatitos</h2>
 
   <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for g in gatos %}
     <div class="col">
-      <div class="card shadow-sm border-0">
 
-        <!-- FOTO ONLINE SEGURA -->
-        <img src="https://cataas.com/cat?{{ g[0] }}" 
-             alt="{{ g[2] }}"
-             class="img-fluid rounded-top"
-             style="height: 260px; object-fit: cover; width: 100%;">
+      <div class="card-cat">
 
-        <div class="card-body text-center">
-          <h5 class="card-title">{{ g[2] }}</h5>
-          <p class="text-muted">{{ g[4] }}</p>
+        <img src="https://cataas.com/cat?{{ g[0] }}"
+             alt="{{ g[2] }}">
+
+        <div class="cat-info">
+          <div class="cat-name">{{ g[2] }}</div>
+          <p class="cat-desc">{{ g[4] }}</p>
           <p><strong>Edad:</strong> {{ g[3] }} años</p>
-          <p class="mb-3">{{ g[5] }}</p>
+          <p>{{ g[5] }}</p>
 
-          <div class="text-center position-relative">
-  <i class="fa-solid fa-heart like-btn" onclick="toggleLike(this)"></i>
-</div>
-
+          <div class="position-relative mt-2">
+            <i class="fa-solid fa-heart like-btn" onclick="toggleLike(this)"></i>
+          </div>
         </div>
 
       </div>
+
     </div>
     {% endfor %}
   </div>
 </div>
+
 <script>
+const sonido = document.getElementById("miauSound");
+
 function toggleLike(el) {
-  // Alternar corazón
   el.classList.toggle("liked");
 
-  // Crear animación de explosión
+  if (el.classList.contains("liked")) {
+    sonido.currentTime = 0;
+    sonido.play();
+  }
+
   const burst = document.createElement("div");
   burst.classList.add("heart-burst");
   burst.innerHTML = "❤️";
-
   el.parentElement.appendChild(burst);
 
-  // Remover animación después
-  setTimeout(() => burst.remove(), 400);
+  setTimeout(() => burst.remove(), 450);
 }
-</script>
 
+/* Tilt 3D PRO */
+document.querySelectorAll(".card-cat").forEach(card => {
+  card.addEventListener("mousemove", e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    card.style.transform = `rotateX(${y / 25}deg) rotateY(${x / -25}deg)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "rotateX(0deg) rotateY(0deg)";
+  });
+});
+</script>
 
 {% endblock %}

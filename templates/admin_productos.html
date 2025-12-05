@@ -1,0 +1,161 @@
+{% extends "layout.html" %}
+{% block titulo %}Administrar Productos{% endblock %}
+
+{% block contenido %}
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/admin">Panel Admin</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navAdmin">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navAdmin">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Inicio</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/productos">Productos</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/usuarios">Usuarios</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/pedidos">Pedidos</a>
+                </li>
+
+            </ul>
+
+            <a class="btn btn-outline-light" href="/logout">Salir</a>
+        </div>
+    </div>
+</nav>
+<!-- ============================================ -->
+
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary">Administrar Productos</h2>
+
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCrear">
+            ➕ Nuevo producto
+        </button>
+    </div>
+
+    <div class="row">
+        {% for p in productos %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">{{ p[1] }}</h5>
+                    <p>{{ p[2] }}</p>
+                    <p class="text-primary fw-bold">${{ p[3] }}</p>
+
+                    <button class="btn btn-warning w-100 mb-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalEditar{{ p[0] }}">
+                        ✏️ Editar
+                    </button>
+
+                    <form method="POST" action="/admin/productos/eliminar/{{ p[0] }}">
+                        <button class="btn btn-danger w-100" onclick="return confirm('¿Eliminar?')">
+                            🗑️ Eliminar
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MODAL EDITAR -->
+        <div class="modal fade" id="modalEditar{{ p[0] }}">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <form method="POST" action="/admin/productos/editar/{{ p[0] }}">
+
+                <div class="modal-header">
+                  <h5 class="modal-title">Editar producto</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                  <label>Nombre</label>
+                  <input type="text" class="form-control" name="nombre" value="{{ p[1] }}" required>
+
+                  <label class="mt-3">Descripción</label>
+                  <textarea class="form-control" name="descripcion" required>{{ p[2] }}</textarea>
+
+                  <label class="mt-3">Precio</label>
+                  <input type="number" class="form-control" name="precio" step="0.01" value="{{ p[3] }}" required>
+
+                  <label class="mt-3">Imagen (archivo)</label>
+                  <input type="text" class="form-control" name="imagen" value="{{ p[4] }}" required>
+
+                </div>
+
+                <div class="modal-footer">
+                  <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button class="btn btn-primary">Guardar cambios</button>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+<!-- MODAL CREAR -->
+<div class="modal fade" id="modalCrear">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <form method="POST" action="/admin/productos/crear">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Crear producto</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <label>Nombre</label>
+          <input type="text" class="form-control" name="nombre" required>
+
+          <label class="mt-3">Descripción</label>
+          <textarea class="form-control" name="descripcion" required></textarea>
+
+          <label class="mt-3">Precio</label>
+          <input type="number" class="form-control" name="precio" step="0.01" required>
+
+          <label class="mt-3">Imagen (archivo)</label>
+          <input type="text" class="form-control" name="imagen" placeholder="ej: friskies.jpg" required>
+
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-success">Crear</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
